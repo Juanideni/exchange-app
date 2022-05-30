@@ -1,20 +1,24 @@
 <template>
   <div class="home">
     <Navbar/>
-    <Register/>
+    <Trade/>
+    <Foot/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Register from '@/components/Register.vue'
+import Trade from '@/components/Trade.vue'
 import Navbar from '@/components/Navbar.vue'
-
+import Foot from '@/components/Foot.vue'
 export default {
-  name: 'RegisterView',
+  name: 'TradeView',
   components: {
-    Register,
-    Navbar
+    Trade, 
+    Navbar,
+    Foot
   }
 }
 </script>
+
+ 
