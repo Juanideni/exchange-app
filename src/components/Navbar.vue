@@ -9,12 +9,12 @@
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
           <li><a href="/trade" class="nav-link px-2 text-white">Trading</a></li>
-
         </ul>
 
         <div class="text-end">
-          <a type="button" href="/login" class="btn btn-outline-light me-2">Login</a>
-          <a type="button" href="/register" class="btn btn-warning">Sign in</a>
+          <a type="button" href="/register" class="btn btn-warning" v-if="this.$store.state.username === ''">Login</a>
+          <p class="text-dark btn btn-warning" v-else>{{this.$store.state.username}}</p>
+        
         </div>
       </div>
     </div>

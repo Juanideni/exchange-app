@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+
     <Navbar />
     <CoinsDataService/>
     <h1 class="title">Exchange´s prices</h1>

@@ -11,8 +11,8 @@
     <tr>
   
       <td>{{exchangeUsdt.exchangeUsdt.charAt(0).toUpperCase() + exchangeUsdt.exchangeUsdt.slice(1)}}</td>
-      <td>$ARS {{exchangeUsdt.ask}}</td>
-      <td>$ARS {{exchangeUsdt.bid}}</td>
+      <td>AR$ {{exchangeUsdt.ask}}</td>
+      <td>AR$ {{exchangeUsdt.bid}}</td>
     </tr>
   </tbody>
 </table>

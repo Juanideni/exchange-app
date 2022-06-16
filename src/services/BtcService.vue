@@ -11,8 +11,8 @@
     <tr>
   
       <td>{{exchangeBtc.exchangeBtc.charAt(0).toUpperCase() + exchangeBtc.exchangeBtc.slice(1)}}</td>
-      <td>$ARS {{exchangeBtc.ask}}</td>
-      <td>$ARS {{exchangeBtc.bid}}</td>
+      <td>AR$ {{exchangeBtc.ask}}</td>
+      <td>AR$ {{exchangeBtc.bid}}</td>
     </tr>
   </tbody>
 </table>

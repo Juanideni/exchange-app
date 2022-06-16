@@ -11,8 +11,8 @@
     <tr>
   
       <td>{{exchangeDai.exchangeDai.charAt(0).toUpperCase() + exchangeDai.exchangeDai.slice(1)}}</td>
-      <td>$ARS {{exchangeDai.ask}}</td>
-      <td>$ARS {{exchangeDai.bid}}</td>
+      <td>AR$ {{exchangeDai.ask}}</td>
+      <td>AR$ {{exchangeDai.bid}}</td>
     </tr>
   </tbody>
 </table>
