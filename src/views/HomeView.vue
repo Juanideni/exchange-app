@@ -2,16 +2,9 @@
   <div class="home">
 
     <Navbar />
-    <CoinsDataService/>
+    <Coins/>
     <h1 class="title">Exchange´s prices</h1>
-    <div class="dashboard ">
-      <BtcService />
-      <EthService />
-    </div>
-    <div class="dashboard">
-      <DaiService />
-      <UsdtService />
-    </div>
+      <ExchangesTables />
     <Foot />
   </div>
 </template>
@@ -20,29 +13,20 @@
 // @ is an alias to /src
 
 import Navbar from "@/components/Navbar.vue";
-import BtcService from "@/services/BtcService.vue";
-import EthService from "@/services/EthService.vue";
-import DaiService from "@/services/DaiService.vue";
+import ExchangesTables from "@/components/ExchangesTables.vue";
 import Foot from "@/components/Foot.vue";
-import UsdtService from "../services/UsdtService.vue";
-import CoinsDataService from "@/services/CoinsDataService.vue";
+import Coins from "@/components/Coins.vue";
 
 export default {
   name: "HomeView",
   components: {
     Navbar,
-    BtcService,
-    EthService,
+    ExchangesTables,
     Foot,
-    DaiService,
-    UsdtService,
-    CoinsDataService
+    Coins
 },
 };
 </script>
 <style scoped>
-.dashboard {
-  display: flex;
-  justify-content: space-evenly;
-}
+
 </style>
