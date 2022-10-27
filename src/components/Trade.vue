@@ -27,9 +27,9 @@
         <h5 class="card-title" v-for="crypto in cryptos" :key="crypto.id">
           {{
             coinSelectedToBuy === crypto.symbol && action === "Buy"
-              ? amountToBuy === "" || amountToBuy === null ? " 1 "+coinSelectedToBuy+" = AR $ "+buyPrice : amountToBuy+" "+coinSelectedToBuy+" = AR $ "+(buyPrice * amountToBuy)
+              ? amountToBuy === "" || amountToBuy === null ? " 1 "+coinSelectedToBuy+" = AR $ "+buyPrice : amountToBuy+" "+coinSelectedToBuy+" = AR $ "+(buyPrice * amountToBuy).toLocaleString()
               : action === "Sell" && coinSelectedToSell === crypto.symbol
-              ? amountToSell === "" || amountToSell === null ? " 1 "+coinSelectedToSell+" = AR $ "+salePrice : amountToSell+" "+coinSelectedToSell+" = AR $ "+(salePrice * amountToSell)
+              ? amountToSell === "" || amountToSell === null ? " 1 "+coinSelectedToSell+" = AR $ "+salePrice : amountToSell+" "+coinSelectedToSell+" = AR $ "+(salePrice * amountToSell).toLocaleString()
               : ""
           }}
         </h5>
@@ -63,21 +63,12 @@ import axios from "axios";
 import UserService from "@/services/UserService";
 
 
-console.log("username: ", store.state.username)
 
 export default {
   name: "Trade",
   data() {
     return {
-      cryptos: [
-        { id: 0, name: "Bitcoin", symbol: "BTC" },
-        { id: 1, name: "Ethereum", symbol: "ETH" },
-        { id: 2, name: "Theter", symbol: "USDT" },
-        { id: 3, name: "USD Coin", symbol: "USDC" },
-        { id: 4, name: "Dai", symbol: "DAI" },
-      ],
-      
-      
+      cryptos: UserService.cryptos,
       investmentHistory: [],
       balance: this.$store.state.balanceAmount,
       amountToBuy: null,
@@ -114,18 +105,14 @@ export default {
     onChangeBuy(event) {
       if (event.target.value !== "") {
         this.coinSelectedToBuy = event.target.value;
-        axios
-          .get(
-            "https://criptoya.com/api/buenbit/" +
-              this.coinSelectedToBuy +
-              "/ars/0.5"
-          )
-          .then((response) => {
+       
+        UserService.getCryptoData(this.coinSelectedToBuy)
+        .then((response) => {
             this.buyPrice = response.data.totalAsk;
-          })
-          .catch((e) => {
+        })
+        .catch((e) => {
             console.log(e);
-          });
+        });
         this.action = "Buy";
         this.keyWord = "Purchase price in AR $";
       } else {
@@ -136,12 +123,13 @@ export default {
     onChangeSell(event) {
       if (event.target.value !== "") {
         this.coinSelectedToSell = event.target.value;
-        axios
-          .get(
-            "https://criptoya.com/api/buenbit/" +
-              this.coinSelectedToSell +
-              "/ars/0.5"
-          )
+        // axios
+        //   .get(
+        //     "https://criptoya.com/api/buenbit/" +
+        //       this.coinSelectedToSell +
+        //       "/ars/0.5"
+        //   )
+          UserService.getCryptoData(this.coinSelectedToSell)
           .then((response) => {
             this.salePrice = response.data.totalBid;
           })
@@ -165,6 +153,8 @@ export default {
       this.purchase.datetime =  Date.now();
       console.log(this.purchase)
       UserService.newTrade(this.purchase)
+      this.calculateAmounts(this.purchase.action, this.purchase.crypto_code, this.purchase.crypto_amount)
+      alert("Success")
       
     },
 
@@ -177,6 +167,21 @@ export default {
       this.sell.datetime =  Date.now();
       console.log(this.sell)
       UserService.newTrade(this.sell)
+      this.calculateAmounts(this.sell.action, this.sell.crypto_code, this.sell.crypto_amount)
+      alert("Success")
+    },
+
+    calculateAmounts(action, coin, amount){
+      debugger;
+      var calculateMoney = UserService.cryptos.find(x => x.symbol === coin);
+      var num = Number(amount);
+      if (action === "purchase"){
+        calculateMoney.totalAmount += num;
+      }
+      else if (action === "sale"){
+        calculateMoney.totalAmount -= num;
+      }
+      console.log(UserService.cryptos);
     }
   },
  

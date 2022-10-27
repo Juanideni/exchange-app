@@ -10,6 +10,7 @@
           <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
           <li><a href="/trade" class="nav-link px-2 text-white">Trading</a></li>
           <li><a href="/trade-history" class="nav-link px-2 text-white">Movements</a></li>
+          <li><a href="/current-status" class="nav-link px-2 text-white">Current Status</a></li>
         </ul>
 
         <div class="text-end">

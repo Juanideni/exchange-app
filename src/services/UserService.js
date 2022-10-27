@@ -33,11 +33,11 @@ export default {
   },
 
   cryptos: [
-    { id: 0, name: "Bitcoin", symbol: "BTC", totalAmount: 0, amountInMoney: 0},
-    { id: 1, name: "Ethereum", symbol: "ETH", totalAmount: 0, amountInMoney: 0 },
-    { id: 2, name: "Theter", symbol: "USDT", totalAmount: 0, amountInMoney: 0 },
-    { id: 3, name: "USD Coin", symbol: "USDC", totalAmount: 0, amountInMoney: 0 },
-    { id: 4, name: "Dai", symbol: "DAI", totalAmount: 0, amountInMoney: 0 },
+    { id: 0, name: "Bitcoin", symbol: "BTC", totalAmount: 0, amountInMoney: 0, salePrice: 0},
+    { id: 1, name: "Ethereum", symbol: "ETH", totalAmount: 0, amountInMoney: 0, salePrice: 0 },
+    { id: 2, name: "Theter", symbol: "USDT", totalAmount: 0, amountInMoney: 0, salePrice: 0 },
+    { id: 3, name: "USD Coin", symbol: "USDC", totalAmount: 0, amountInMoney: 0, salePrice: 0 },
+    { id: 4, name: "Dai", symbol: "DAI", totalAmount: 0, amountInMoney: 0, salePrice: 0 },
   ],
   
 }

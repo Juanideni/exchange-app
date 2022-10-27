@@ -37,25 +37,7 @@
           
             <a href="/trade" target="_blank"><button type="button" class="btn btn-warning">New movement</button></a>
             
-            <div class="tableAmounts">
-                <h1>Your crypto amounts</h1>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">Coins</th>
-                            <th scope="col">Coin's Amount</th>
-                            <th scope="col">Money amount (sale price)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="crypto of cryptoList" :key="crypto.id">
-                            <td class="tg-kxt4">{{crypto.name}}</td>
-                            <td class="tg-kxt4">{{crypto.totalAmount.toLocaleString()}}</td>
-                            <td class="tg-kxt4">$ {{crypto.amountInMoney.toLocaleString()}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+           
         </div>
     </div>
 
@@ -177,7 +159,7 @@
 
 
 import UserService from '@/services/UserService';
-import axios from "axios";
+
 
     export default {
         name: "TradeHistory",
@@ -195,7 +177,7 @@ import axios from "axios";
                 },
                 oldMovement: null,
                 otherAction: null,
-                cryptoList: [],
+                
                 formatDate: null,
                 price: null
             }
@@ -207,31 +189,16 @@ import axios from "axios";
                 this.investmentHistory = res.data
                 this.cryptoList = UserService.cryptos;
                 
-                this.investmentHistory.forEach(element => {
-                    var calculateMoney = this.cryptoList.find(x => x.symbol === element.crypto_code);
-                    var num = Number(element.crypto_amount);
-                    if (element.action === "purchase"){
-                        calculateMoney.totalAmount += num 
-                    }
-                    else if (element.action === "sale"){
-                        calculateMoney.totalAmount -= num
-                    }
-                    UserService.getCryptoData(element.crypto_code).then((res)=>{
-                                console.log(res.data)
-                                let price = res.data
-                                debugger
-                                calculateMoney.amountInMoney = price.totalBid * calculateMoney.totalAmount
-                                //calculateMoney.amountInMoney = toLocaleString()
-                    })
-
-                });
+                console.log(UserService.cryptos);
             })
             
         },
         methods:{
             
             reloadTable(){
-               window.location()
+               UserService.getMovements("juani3").then((res) => {
+                this.investmentHistory = res.data
+                })
             },
 
             deleteMovement(id){

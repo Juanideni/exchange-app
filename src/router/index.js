@@ -5,6 +5,7 @@ import RegisterView from "../views/RegisterView.vue"
 import LoginView from '@/views/LoginView.vue';
 import TradeView from '@/views/TradeView.vue';
 import TradeHistoryView from '@/views/TradeHistoryView.vue'
+import CurrentStatusView from '@/views/CurrentStatusView.vue'
 
 const routes = [
   {
@@ -40,6 +41,11 @@ const routes = [
     path: "/trade-history",
     name: "TradeHistory",
     component: TradeHistoryView,
+  },
+  {
+    path: "/current-status",
+    name: "CurrentStatus",
+    component: CurrentStatusView,
   },
 ];
 
