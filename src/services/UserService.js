@@ -1,25 +1,43 @@
 import axios from "axios";
 
-const clienteAPI = axios.create({
+const clientAPI = axios.create({
   baseURL: "https://laboratorio3-f36a.restdb.io/rest",
   headers: { "x-apikey": "60eb09146661365596af552f" },
 });
 
 export default {
-  getTransacciones(username) {
-    return clienteAPI.get(`/transactions?q={"user_id": "${username}"}`);
+  getMovements(username) {
+    return clientAPI.get(`/transactions?q={"user_id": "${username}"}`);
   },
-  getTransaccionesById(id) {
-    return clienteAPI.get(`/transactions/${id}`);
+  getMovementById(id) {
+    return clientAPI.get(`/transactions/${id}`);
   },
 
-  ingresarNuevaTransaccion(nuevaTransaccion) {
-    return clienteAPI.post("/transactions", nuevaTransaccion);
+  newTrade(newTrade) {
+    console.log("Movimiento correcto")
+    return clientAPI.post("/transactions", newTrade);
   },
-  modificarTransaccion(id, transaccionEditada) {
-    return clienteAPI.put(`/transactions/${id}`, transaccionEditada);
+  updateMovement(id, transaccionEditada) {
+    transaccionEditada.datetime = Date.now();
+    console.log(transaccionEditada)
+    return clientAPI.put(`/transactions/${id}`, transaccionEditada);
   },
-  eliminarTransaccion(id) {
-    return clienteAPI.delete(`/transactions/${id}`);
+  deleteMovement(id) {
+    return clientAPI.delete(`/transactions/${id}`);
   },
+
+  //Crypto
+
+  getCryptoData(coin){
+    return axios.get("https://criptoya.com/api/buenbit/"+coin+"/ars/0.5")
+  },
+
+  cryptos: [
+    { id: 0, name: "Bitcoin", symbol: "BTC", totalAmount: 0, amountInMoney: 0},
+    { id: 1, name: "Ethereum", symbol: "ETH", totalAmount: 0, amountInMoney: 0 },
+    { id: 2, name: "Theter", symbol: "USDT", totalAmount: 0, amountInMoney: 0 },
+    { id: 3, name: "USD Coin", symbol: "USDC", totalAmount: 0, amountInMoney: 0 },
+    { id: 4, name: "Dai", symbol: "DAI", totalAmount: 0, amountInMoney: 0 },
+  ],
+  
 }

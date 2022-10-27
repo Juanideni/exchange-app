@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1>Hello {{username}}!</h1>
+  <h1>Hello {{this.$store.state.username}}!</h1>
   <h4>Your balance amount: {{balance}}</h4>
 </div>
   <div class="trade">
@@ -10,7 +10,7 @@
         aria-label=".form-select-sm example"
         @change="onChangeBuy($event)"
       >
-      <option>--</option>
+      <option value = "" selected>Choose one to buy</option>
         <option v-for="crypto in cryptos" :key="crypto.id">
           {{ crypto.symbol }}
         </option>
@@ -18,18 +18,18 @@
       <br />
       <input class="form-control" type="number" v-model="amountToBuy" />
       <br />
-      <button class="btn btn-warning">Buy</button>
+      <button class="btn btn-warning" v-on:click="newBuy()">Buy</button>
     </div>
-    <div class="card text-bg-light mb-3" style="max-width: 18rem">
+    <div class="card text-bg-light" style="width: 20rem; height: 11rem;">
       <div class="card-header">{{ action }} </div>
       <div class="card-body">
         <p class="card-text">{{ keyWord }}</p>
         <h5 class="card-title" v-for="crypto in cryptos" :key="crypto.id">
           {{
             coinSelectedToBuy === crypto.symbol && action === "Buy"
-              ? amountToBuy === "" || amountToBuy === null ? " 1 "+coinSelectedToBuy+" = AR$ "+buyPrice : amountToBuy+" "+coinSelectedToBuy+" = AR$ "+(buyPrice * amountToBuy)
+              ? amountToBuy === "" || amountToBuy === null ? " 1 "+coinSelectedToBuy+" = AR $ "+buyPrice : amountToBuy+" "+coinSelectedToBuy+" = AR $ "+(buyPrice * amountToBuy)
               : action === "Sell" && coinSelectedToSell === crypto.symbol
-              ? amountToSell === "" || amountToSell === null ? " 1 "+coinSelectedToSell+" = AR$ "+salePrice : amountToSell+" "+coinSelectedToSell+" = AR$ "+(salePrice * amountToSell)
+              ? amountToSell === "" || amountToSell === null ? " 1 "+coinSelectedToSell+" = AR $ "+salePrice : amountToSell+" "+coinSelectedToSell+" = AR $ "+(salePrice * amountToSell)
               : ""
           }}
         </h5>
@@ -40,7 +40,8 @@
         class="form-select"
         aria-label=".form-select-sm example"
         @change="onChangeSell($event)"
-      ><option>--</option>
+      >
+      <option value = "" selected>Choose one to sell</option>
         <option v-for="crypto in cryptos" :key="crypto.id">
           {{ crypto.symbol }}
         </option>
@@ -48,65 +49,21 @@
       <br />
       <input class="form-control" type="number" v-model="amountToSell" />
       <br />
-      <button class="btn btn-warning">Sell</button>
+      <button class="btn btn-warning" v-on:click="newSell()">Sell</button>
     </div>
   </div>
   <hr />
-  <div>
-    <h1>Trade´s history</h1>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Action</th>
-          <th scope="col">Currency</th>
-          <th scope="col">Amount</th>
-          <th scope="col">Money (in $ARS)</th>
-          <th scope="col">Date</th>
-          <th scope="col">Buttons</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Purchase</th>
-          <td>Bitcoin</td>
-          <td>0000.10</td>
-          <td>100</td>
-          <td>2022</td>
-          <td>
-            <button class="btn btn-warning">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">Sale</th>
-          <td>Bitcoin</td>
-          <td>0000.10</td>
-          <td>100</td>
-          <td>2022</td>
-          <td>
-            <button class="btn btn-warning">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">Purchase</th>
-          <td>Bitcoin</td>
-          <td>0000.10</td>
-          <td>100</td>
-          <td>2022</td>
-          <td>
-            <button class="btn btn-warning">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  
 </template>
 
 <script>
 
+import store from "@/store";
 import axios from "axios";
+import UserService from "@/services/UserService";
+
+
+console.log("username: ", store.state.username)
 
 export default {
   name: "Trade",
@@ -119,7 +76,9 @@ export default {
         { id: 3, name: "USD Coin", symbol: "USDC" },
         { id: 4, name: "Dai", symbol: "DAI" },
       ],
-      username: this.$store.state.username,
+      
+      
+      investmentHistory: [],
       balance: this.$store.state.balanceAmount,
       amountToBuy: null,
       amountToSell: null,
@@ -128,14 +87,32 @@ export default {
       nameCoin: null,
       buyPrice: null,
       salePrice: null,
-      action: null,
-      keyWord: null,
+      action: "Price card",
+      keyWord: "Price in AR $",
+
+      purchase: {
+        user_id: "",
+        action: "",
+        crypto_code: "",
+        crypto_amount: "",
+        money: "",
+        datetime: "",
+      },
+
+      sell: {
+        user_id: "",
+        action: "",
+        crypto_code: "",
+        crypto_amount: "",
+        money: "",
+        datetime: "",
+      }
     };
   },
-  mounted() {},
+  
   methods: {
     onChangeBuy(event) {
-      if (event.target.value !== "--") {
+      if (event.target.value !== "") {
         this.coinSelectedToBuy = event.target.value;
         axios
           .get(
@@ -150,14 +127,14 @@ export default {
             console.log(e);
           });
         this.action = "Buy";
-        this.keyWord = "Purchase price in AR$";
-      } else if (event.target.value === "--") {
+        this.keyWord = "Purchase price in AR $";
+      } else {
         this.action = "Price card";
-        this.keyWord = "Price in AR$";
+        this.keyWord = "Price in AR $";
       }
     },
     onChangeSell(event) {
-      if (event.target.value !== "--") {
+      if (event.target.value !== "") {
         this.coinSelectedToSell = event.target.value;
         axios
           .get(
@@ -172,13 +149,37 @@ export default {
             console.log(e);
           });
         this.action = "Sell";
-        this.keyWord = "Sale price in AR$";
-      } else if (event.target.value === "--") {
+        this.keyWord = "Sale price in AR $";
+      } else if (event.target.value === "") {
         this.action = "Price card";
-        this.keyWord = "Price in AR$";
+        this.keyWord = "Price in AR $";
       }
     },
+
+    newBuy(){
+      this.purchase.user_id = "juani3";//this.$store.state.username;
+      this.purchase.crypto_code = this.coinSelectedToBuy;
+      this.purchase.crypto_amount = this.amountToBuy.toFixed(2)
+      this.purchase.money = (this.buyPrice * this.amountToBuy).toFixed(2).toString()
+      this.purchase.action = "purchase";
+      this.purchase.datetime =  Date.now();
+      console.log(this.purchase)
+      UserService.newTrade(this.purchase)
+      
+    },
+
+    newSell(){
+      this.sell.user_id = "juani3";
+      this.sell.crypto_code = this.coinSelectedToSell;
+      this.sell.crypto_amount = this.amountToSell.toFixed(2)
+      this.sell.money = (this.salePrice * this.amountToSell).toFixed(2).toString()
+      this.sell.action = "sale";
+      this.sell.datetime =  Date.now();
+      console.log(this.sell)
+      UserService.newTrade(this.sell)
+    }
   },
+ 
 };
 </script>
 <style scoped>

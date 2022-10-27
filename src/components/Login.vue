@@ -1,20 +1,14 @@
 <template>
-   <h1>If you are a newbie, you have to create an account</h1>
-   <h2>Enter a nickname or your name as Username to start</h2>
  <div class="register">
+   <h2>Enter a nickname or your name as Username to start</h2>
    <div class="form-register m-auto mb-3">
      <form v-on:submit.prevent="createUser">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
         <div class="form-floating">
-        <input type="text" class="form-control" id="floatingInput" v-model="username" placeholder="Enter your username">
+        <input type="text"  class="form-control mb-3" id="username" name="username" v-model="username" placeholder="Enter your username">
       <label for="floatingInput">Username</label>
     </div>
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" value="remember-me"> Remember me
-      </label>
-    </div>
-    <button class="w-100 btn btn-lg btn-primary" type="submit" >Register me!</button>
+    <button class="w-100 btn btn-lg btn-primary" type="submit">Register me!</button>
   </form>
 </div>
 </div>
@@ -30,7 +24,7 @@ export default {
     }
   },
   methods: {
-    createUser() {
+    createUser: function() {
       if (this.username === "") {
       console.log("Error, couldn´t be empty")
       }
@@ -43,7 +37,8 @@ export default {
         this.$router.push("/")
      }
     }
-  }
+  },
+  
 }
 </script>
 

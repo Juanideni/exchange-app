@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import RegisterView from "../views/RegisterView.vue"
 import LoginView from '@/views/LoginView.vue';
 import TradeView from '@/views/TradeView.vue';
+import TradeHistoryView from '@/views/TradeHistoryView.vue'
 
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
     path: "/trade",
     name: "Trade",
     component: TradeView,
+  },
+  {
+    path: "/trade-history",
+    name: "TradeHistory",
+    component: TradeHistoryView,
   },
 ];
 

@@ -15,6 +15,7 @@
     "coingecko-api": "^1.0.10",
     "core-js": "^3.8.3",
     "https": "^1.0.0",
+    "jquery": "^3.6.1",
     "vue": "^3.2.33",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
@@ -24,5 +25,17 @@
     "@vue/cli-plugin-router": "~5.0.0",
     "@vue/cli-plugin-vuex": "~5.0.0",
     "@vue/cli-service": "~5.0.0"
-  }
+  },
+  "description": "## Project setup ``` npm install ```",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Juanideni/exchange-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Juanideni/exchange-app/issues"
+  },
+  "homepage": "https://github.com/Juanideni/exchange-app#readme"
 }

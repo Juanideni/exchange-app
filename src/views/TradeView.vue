@@ -11,13 +11,14 @@
 import Trade from '@/components/Trade.vue'
 import Navbar from '@/components/Navbar.vue'
 import Foot from '@/components/Foot.vue'
+
 export default {
   name: 'TradeView',
   components: {
-    Trade, 
+    Trade,
     Navbar,
-    Foot
-  }
+    Foot,
+}
 }
 </script>
 
