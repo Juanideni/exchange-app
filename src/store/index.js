@@ -5,7 +5,8 @@ export default createStore({
   state: {
     username: "",
     balanceAmount: 0,
-    transacciones: []
+    transacciones: [],
+    cryptos: UserService.cryptos,
   },
   getters: {},
   mutations: {
@@ -22,6 +23,22 @@ export default createStore({
         .catch(() => {
           alert("Error");
         });
+    },
+    newSale(state, sale){
+      debugger;
+      var money = parseFloat(sale.money)
+      var amount = parseFloat(sale.crypto_amount);
+     state.cryptos.find(x => x.symbol === sale.crypto_code).sales += money;
+     state.cryptos.find(x => x.symbol === sale.crypto_code).amount -= amount;
+     
+    },
+    newPurchase(state, sale){
+      debugger;
+      var money = parseFloat(sale.money)
+      var amount = parseFloat(sale.crypto_amount);
+     state.cryptos.find(x => x.symbol === sale.crypto_code).purchases += money;
+     state.cryptos.find(x => x.symbol === sale.crypto_code).amount += amount;
+     
     }
   },
   actions: {},

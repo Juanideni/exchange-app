@@ -33,8 +33,7 @@ export default {
       }
       else {
         this.$store.commit("newUser", this.username)
-        this.$store.commit("cargarTransacciones")
-        this.$router.push("/")
+        this.$router.push("/trade")
      }
     }
   },

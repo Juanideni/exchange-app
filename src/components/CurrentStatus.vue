@@ -7,15 +7,15 @@
                         <th scope="col">Coins</th>
                         <th scope="col">Coin's Amount</th>
                         <th scope="col">Total Money amount (sale price)</th>
-                        <th scope="col">Coin's sale price</th>
+                        <th scope="col"> Accumulated Gain </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="crypto of cryptoList" :key="crypto.id">
                         <td class="tg-kxt4">{{crypto.name}}</td>
-                        <td class="tg-kxt4">{{crypto.totalAmount.toLocaleString()}}</td>
-                        <td class="tg-kxt4">${{crypto.amountInMoney.toLocaleString()}}</td>
-                        <td class="tg-kxt4">${{crypto.salePrice.toLocaleString()}}</td>
+                        <td class="tg-kxt4">{{crypto.amount}}</td>
+                        <td class="tg-kxt4">$ {{crypto.amountInMoney}}</td>
+                        <td class="tg-kxt4">$ {{crypto.result}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -27,38 +27,22 @@ export default {
     name: "CurrentStatus",
     data(){
         return {
-            cryptoList: [],
+            cryptoList: this.$store.state.cryptos,
+            salePrice: 0,
+            
         }
     }, 
     mounted(){
-        
-        UserService.getMovements("juani3").then((res) => {
-            this.investmentHistory = res.data
-            this.cryptoList = UserService.cryptos;
-                
-                this.investmentHistory.forEach(element => {
-                    var calculateMoney = this.cryptoList.find(x => x.symbol === element.crypto_code);
-                    var num = Number(element.crypto_amount);
-                    if (element.action === "purchase"){
-                        calculateMoney.totalAmount += num 
-                    }
-                    else if (element.action === "sale"){
-                        calculateMoney.totalAmount -= num
-                    }
-                    UserService.getCryptoData(element.crypto_code).then((res)=>{
-                                let price = res.data
-                                calculateMoney.amountInMoney = price.totalBid * calculateMoney.totalAmount
-                    })
-                });
+        console.log(this.cryptoList)
+        this.cryptoList.forEach(element => {
+            console.log(element)
+            UserService.getCryptoData(element.symbol).then((res)=>{
+                element.amountInMoney = res.data.totalBid * element.amount;
+                debugger
+                element.result = (element.sales- element.purchases) + element.amountInMoney;
+                console.log(element)
             })
-
-        UserService.cryptos.forEach(coin =>{
-            debugger;
-            UserService.getCryptoData(coin.symbol.toLocaleLowerCase()).then((res) => {
-                debugger;
-                coin.salePrice = res.data.totalBid
-            })
-        })
+        });
     },
 }
 </script>

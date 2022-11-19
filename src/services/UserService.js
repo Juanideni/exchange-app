@@ -29,15 +29,15 @@ export default {
   //Crypto
 
   getCryptoData(coin){
-    return axios.get("https://criptoya.com/api/buenbit/"+coin+"/ars/0.5")
+    return axios.get("https://criptoya.com/api/buenbit/"+coin+"/ars/0.1")
   },
 
   cryptos: [
-    { id: 0, name: "Bitcoin", symbol: "BTC", totalAmount: 0, amountInMoney: 0, salePrice: 0},
-    { id: 1, name: "Ethereum", symbol: "ETH", totalAmount: 0, amountInMoney: 0, salePrice: 0 },
-    { id: 2, name: "Theter", symbol: "USDT", totalAmount: 0, amountInMoney: 0, salePrice: 0 },
-    { id: 3, name: "USD Coin", symbol: "USDC", totalAmount: 0, amountInMoney: 0, salePrice: 0 },
-    { id: 4, name: "Dai", symbol: "DAI", totalAmount: 0, amountInMoney: 0, salePrice: 0 },
+    { id: 0, name: "Bitcoin", symbol: "BTC", amount: 0,sales: 0, purchases: 0, amountInMoney: 0, result: 0 },
+    { id: 1, name: "Ethereum", symbol: "ETH", amount: 0,sales: 0, purchases: 0, amountInMoney: 0, result: 0 },
+    { id: 2, name: "Theter", symbol: "USDT", amount: 0,sales: 0, purchases: 0, amountInMoney: 0, result: 0 },
+    { id: 3, name: "USD Coin", symbol: "USDC", amount: 0,sales: 0, purchases: 0, amountInMoney: 0, result: 0 },
+    { id: 4, name: "Dai", symbol: "DAI", amount: 0,sales: 0, purchases: 0, amountInMoney: 0, result: 0 },
   ],
   
 }

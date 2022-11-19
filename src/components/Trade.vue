@@ -1,7 +1,6 @@
 <template>
 <div>
-  <h1>Hello {{this.$store.state.username}}!</h1>
-  <h4>Your balance amount: {{balance}}</h4>
+  <h1>It's trading time! </h1>
 </div>
   <div class="trade">
     <div>
@@ -70,7 +69,6 @@ export default {
     return {
       cryptos: UserService.cryptos,
       investmentHistory: [],
-      balance: this.$store.state.balanceAmount,
       amountToBuy: null,
       amountToSell: null,
       coinSelectedToBuy: null,
@@ -105,7 +103,6 @@ export default {
     onChangeBuy(event) {
       if (event.target.value !== "") {
         this.coinSelectedToBuy = event.target.value;
-       
         UserService.getCryptoData(this.coinSelectedToBuy)
         .then((response) => {
             this.buyPrice = response.data.totalAsk;
@@ -123,12 +120,6 @@ export default {
     onChangeSell(event) {
       if (event.target.value !== "") {
         this.coinSelectedToSell = event.target.value;
-        // axios
-        //   .get(
-        //     "https://criptoya.com/api/buenbit/" +
-        //       this.coinSelectedToSell +
-        //       "/ars/0.5"
-        //   )
           UserService.getCryptoData(this.coinSelectedToSell)
           .then((response) => {
             this.salePrice = response.data.totalBid;
@@ -145,44 +136,40 @@ export default {
     },
 
     newBuy(){
-      this.purchase.user_id = "juani3";//this.$store.state.username;
+      this.purchase.user_id = this.$store.state.username;
       this.purchase.crypto_code = this.coinSelectedToBuy;
       this.purchase.crypto_amount = this.amountToBuy.toFixed(2)
       this.purchase.money = (this.buyPrice * this.amountToBuy).toFixed(2).toString()
       this.purchase.action = "purchase";
       this.purchase.datetime =  Date.now();
-      console.log(this.purchase)
+
+      
       UserService.newTrade(this.purchase)
-      this.calculateAmounts(this.purchase.action, this.purchase.crypto_code, this.purchase.crypto_amount)
+      
+      this.$store.commit("newPurchase", this.purchase)
+      this.$router.push("/Current-status")
+    
       alert("Success")
       
     },
 
     newSell(){
-      this.sell.user_id = "juani3";
+      this.sell.user_id = this.$store.state.username;
       this.sell.crypto_code = this.coinSelectedToSell;
       this.sell.crypto_amount = this.amountToSell.toFixed(2)
       this.sell.money = (this.salePrice * this.amountToSell).toFixed(2).toString()
       this.sell.action = "sale";
       this.sell.datetime =  Date.now();
-      console.log(this.sell)
+   
       UserService.newTrade(this.sell)
-      this.calculateAmounts(this.sell.action, this.sell.crypto_code, this.sell.crypto_amount)
+     
+      this.$store.commit("newSale", this.sell)
+      this.$router.push("/Current-status")
+
       alert("Success")
     },
 
-    calculateAmounts(action, coin, amount){
-      debugger;
-      var calculateMoney = UserService.cryptos.find(x => x.symbol === coin);
-      var num = Number(amount);
-      if (action === "purchase"){
-        calculateMoney.totalAmount += num;
-      }
-      else if (action === "sale"){
-        calculateMoney.totalAmount -= num;
-      }
-      console.log(UserService.cryptos);
-    }
+   
   },
  
 };

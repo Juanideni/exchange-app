@@ -3,7 +3,7 @@
       
         <div class="test">
             <div class="tableHistory">
-                <h1>Trade´s history</h1>
+                <h1>Trade's history</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -35,7 +35,7 @@
                 </table>
             </div>
           
-            <a href="/trade" target="_blank"><button type="button" class="btn btn-warning">New movement</button></a>
+            <router-link to="/trade" target="_blank"><button type="button" class="btn btn-warning">New movement</button></router-link>
             
            
         </div>
@@ -168,7 +168,7 @@ import UserService from '@/services/UserService';
                 investmentHistory: [],
                 movementId: null,
                 newMovement: {
-                    user_id: "juani3",
+                    user_id: this.$store.state.username,
                     action: "",
                     crypto_code: "",
                     crypto_amount: "",
@@ -185,7 +185,13 @@ import UserService from '@/services/UserService';
 
 
         mounted(){
-            UserService.getMovements("juani3").then((res) => {
+            debugger;
+            // if (this.$store.state.username === ''){
+            //     alert("user not found");
+            //     this.$router.push("/")
+            // }
+
+            UserService.getMovements(this.$store.state.username).then((res) => {
                 this.investmentHistory = res.data
                 this.cryptoList = UserService.cryptos;
                 
@@ -196,7 +202,7 @@ import UserService from '@/services/UserService';
         methods:{
             
             reloadTable(){
-               UserService.getMovements("juani3").then((res) => {
+               UserService.getMovements(this.$store.state.username).then((res) => {
                 this.investmentHistory = res.data
                 })
             },
@@ -231,6 +237,12 @@ import UserService from '@/services/UserService';
                     debugger
                     console.log(this.newMovement)
                     console.log("editado correctamente")
+                    if (this.newMovement.action === "purchase"){
+                        this.$store.commit("newPurchase", this.newMovement)
+                    }
+                    else{
+                        this.$store.commit("newSale", this.purchase)
+                    }
                     location.reload()
                 })
             },
