@@ -99,11 +99,10 @@ export default {
   },
   
   mounted(){
-      // if (this.$store.state.username === ''){
-      //     alert("user not found");
-      //     this.$router.push("/")
-      // }
-      this.$store.state.username = "juani3";
+      if (this.$store.state.username === ''){
+          alert("user not found");
+          this.$router.push("/")
+      }
   },
 
   methods: {
