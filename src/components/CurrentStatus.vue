@@ -13,9 +13,9 @@
                 <tbody>
                     <tr v-for="crypto of cryptoList" :key="crypto.id">
                         <td class="tg-kxt4">{{crypto.name}}</td>
-                        <td class="tg-kxt4">{{crypto.amount}}</td>
-                        <td class="tg-kxt4">$ {{crypto.amountInMoney}}</td>
-                        <td class="tg-kxt4">$ {{crypto.result}}</td>
+                        <td class="tg-kxt4">{{Number(crypto.amount).toLocaleString()}}</td>
+                        <td class="tg-kxt4">$ {{Number(crypto.amountInMoney).toLocaleString()}}</td>
+                        <td class="tg-kxt4">$ {{Number(crypto.result).toLocaleString()}}</td>
                     </tr>
                 </tbody>
             </table>
