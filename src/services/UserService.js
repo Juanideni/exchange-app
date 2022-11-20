@@ -14,12 +14,10 @@ export default {
   },
 
   newTrade(newTrade) {
-    console.log("Movimiento correcto")
     return clientAPI.post("/transactions", newTrade);
   },
   updateMovement(id, transaccionEditada) {
     transaccionEditada.datetime = Date.now();
-    console.log(transaccionEditada)
     return clientAPI.put(`/transactions/${id}`, transaccionEditada);
   },
   deleteMovement(id) {

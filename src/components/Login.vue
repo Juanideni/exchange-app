@@ -25,7 +25,6 @@ export default {
   },
   methods: {
     createUser: function() {
-      debugger;
       if (this.username === "") {
       alert("Error, couldn´t be empty")
       this.$router.push("/")

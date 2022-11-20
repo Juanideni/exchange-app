@@ -194,8 +194,6 @@ import UserService from '@/services/UserService';
             UserService.getMovements(this.$store.state.username).then((res) => {
                 this.investmentHistory = res.data
                 this.cryptoList = UserService.cryptos;
-                
-                console.log(UserService.cryptos);
             })
             
         },
@@ -208,9 +206,14 @@ import UserService from '@/services/UserService';
             },
 
             deleteMovement(id){
-                console.log(id)
+                let movementToDelete = null
+                UserService.getMovementById(id).then((res)=>{
+                    movementToDelete = res.data;
+                })
                 UserService.deleteMovement(id)
                 .then(()=>{
+                    this.$store.commit("deleteMovement", movementToDelete)
+                    alert("Movement deleted")
                     this.reloadTable();
                 })
                 this.investmentHistory = ""
@@ -225,18 +228,15 @@ import UserService from '@/services/UserService';
                         this.formatDate = new Date(this.newMovement.datetime).toLocaleString()
                     }
                     UserService.getCryptoData(this.newMovement.crypto_code).then((res) =>{
-                        debugger
+                       
                         this.price = this.newMovement.action === "sale" ? res.totalBid : res.totalAsk;
                     })
-                    console.log("price:"+this.price)
                 })
                
             },
             postNewMovement(id){
                 UserService.updateMovement(id, this.newMovement).then(()=>{
-                    debugger
-                    console.log(this.newMovement)
-                    console.log("editado correctamente")
+                    alert("Successful")
                     if (this.newMovement.action === "purchase"){
                         this.$store.commit("newPurchase", this.newMovement)
                     }
@@ -249,9 +249,7 @@ import UserService from '@/services/UserService';
             getPrice(action, crypto){
                 let cryptoInfo 
                 UserService.getCryptoData(crypto).then((res)=>{
-                    console.log(res.data)
                     cryptoInfo = res.data
-                    debugger;
                     if(action === "sale"){
                     this.newMovement.action = "sale";
                     this.otherAction = "purchase";

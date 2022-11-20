@@ -29,7 +29,7 @@ export default {
   data(){
       return{
           trendCoins: null,
-          lala: null
+          
       }
   },
     mounted() {
@@ -39,9 +39,9 @@ export default {
       };
       
       axios.request(coins).then(response => {
-          this.lala = response.data
-        this.trendCoins = this.lala.filter(x => x.id === "bitcoin" || x.id === "ethereum" || x.id === "usd-coin" || x.id === "tether" || x.id === "dai")
-        console.log(this.lala)
+          let res = response.data
+        this.trendCoins = this.res.filter(x => x.id === "bitcoin" || x.id === "ethereum" || x.id === "usd-coin" || x.id === "tether" || x.id === "dai")
+        
       }).catch(function (error) {
         console.error(error);
       });

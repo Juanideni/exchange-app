@@ -38,12 +38,9 @@ export default {
                 this.$router.push("/")
             }
         this.cryptoList.forEach(element => {
-            console.log(element)
             UserService.getCryptoData(element.symbol).then((res)=>{
                 element.amountInMoney = res.data.totalBid * element.amount;
-                debugger
                 element.result = (element.sales- element.purchases) + element.amountInMoney;
-                console.log(element)
             })
         });
     },

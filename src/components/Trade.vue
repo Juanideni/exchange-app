@@ -160,7 +160,6 @@ export default {
     },
 
     newSell(){
-      debugger; 
       let validationAmountCrypto = UserService.cryptos.find(x=> x.symbol === this.coinSelectedToSell)
 
       if (this.amountToSell > validationAmountCrypto.amount){

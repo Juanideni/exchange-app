@@ -13,19 +13,7 @@ export default createStore({
     newUser(state, username) {
       state.username = username;
     },
-    cargarTransacciones(state) {
-        UserService.getTransacciones(state.username)
-        .then((response) => {
-          state.transacciones = response.data;
-          console.log(state.transacciones)
-          console.log(state.username)
-        })
-        .catch(() => {
-          alert("Error");
-        });
-    },
     newSale(state, sale){
-      debugger;
       var money = parseFloat(sale.money)
       var amount = parseFloat(sale.crypto_amount);
      state.cryptos.find(x => x.symbol === sale.crypto_code).sales += money;
@@ -33,12 +21,16 @@ export default createStore({
      
     },
     newPurchase(state, sale){
-      debugger;
       var money = parseFloat(sale.money)
       var amount = parseFloat(sale.crypto_amount);
      state.cryptos.find(x => x.symbol === sale.crypto_code).purchases += money;
      state.cryptos.find(x => x.symbol === sale.crypto_code).amount += amount;
      
+    },
+
+    deleteMovement(state, movement){
+      var amount = parseFloat(movement.crypto_amount);
+      state.cryptos.find(x => x.symbol === movement.crypto_code).amount -= amount;
     }
   },
   actions: {},
