@@ -1,9 +1,10 @@
 <template>
+    
+    <h1 class="title">Trade's history</h1>
     <div class="tradeHistory">
       
         <div class="test">
             <div class="tableHistory">
-                <h1>Trade's history</h1>
                 <table class="table table-striped">
                     <thead>
                         <tr>
@@ -23,9 +24,9 @@
                             <td class="tg-kxt4">{{ transaccion.action}}</td>
                             <td class="tg-kxt4">{{ transaccion.crypto_code }}</td>
                             <td class="tg-kxt4">{{ transaccion.crypto_amount }}</td>
-                            <td class="tg-kxt4">${{ transaccion.money }}</td>
+                            <td class="tg-kxt4">$ {{ Number(transaccion.money).toLocaleString() }}</td>
                             <td class="tg-kxt4">{{ new Date(transaccion.datetime).toLocaleString() }}</td>
-                            <td>
+                            <td class="buttons">
                             <button class="btn btn-primary"  v-on:click="getMovementToEdit(transaccion._id, true)" data-bs-toggle="modal" data-bs-target="#viewModal">View</button>
                             <button class="btn btn-warning" v-on:click="getMovementToEdit(transaccion._id, false)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                             <button class="btn btn-danger" v-on:click="deleteMovement(transaccion._id)">Delete</button>
@@ -35,7 +36,7 @@
                 </table>
             </div>
           
-            <router-link to="/trade" target="_blank"><button type="button" class="btn btn-warning">New movement</button></router-link>
+            
             
            
         </div>
@@ -185,12 +186,11 @@ import UserService from '@/services/UserService';
 
 
         mounted(){
-            debugger;
-            // if (this.$store.state.username === ''){
-            //     alert("user not found");
-            //     this.$router.push("/")
-            // }
-
+            if (this.$store.state.username === ''){
+                alert("user not found");
+                this.$router.push("/")
+            }
+            
             UserService.getMovements(this.$store.state.username).then((res) => {
                 this.investmentHistory = res.data
                 this.cryptoList = UserService.cryptos;
@@ -274,7 +274,7 @@ import UserService from '@/services/UserService';
 }
 .buttons{
     display: flex;
-    justify-content: space-evenly;
+    justify-content:space-evenly;
 }
 .updateForm{
     margin-top: 3%;
@@ -287,13 +287,16 @@ import UserService from '@/services/UserService';
 .tableHistory{
     width: 100%;
 }
-
-
 .test{
     display: flex;
     justify-content: space-between;
 }
 .table{
     padding: 2%;
+}
+.title{
+    margin: 5% 0 0 0;
+    display: flex;
+    justify-content: center;
 }
 </style>

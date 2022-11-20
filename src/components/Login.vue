@@ -25,11 +25,14 @@ export default {
   },
   methods: {
     createUser: function() {
+      debugger;
       if (this.username === "") {
-      console.log("Error, couldn´t be empty")
+      alert("Error, couldn´t be empty")
+      this.$router.push("/")
       }
-      else if (this.username.length > 15) {
-      console.log("Username mustn´t have more than 15 characters")
+      else if (this.username.length < 10) {
+      alert("Username mustn´t have more than 10 characters")
+      this.$router.push("/")
       }
       else {
         this.$store.commit("newUser", this.username)

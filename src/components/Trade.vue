@@ -1,6 +1,6 @@
 <template>
 <div>
-  <h1>It's trading time! </h1>
+  <h1 class="title">It's trading time! </h1>
 </div>
   <div class="trade">
     <div>
@@ -51,7 +51,6 @@
       <button class="btn btn-warning" v-on:click="newSell()">Sell</button>
     </div>
   </div>
-  <hr />
   
 </template>
 
@@ -99,6 +98,14 @@ export default {
     };
   },
   
+  mounted(){
+      // if (this.$store.state.username === ''){
+      //     alert("user not found");
+      //     this.$router.push("/")
+      // }
+      this.$store.state.username = "juani3";
+  },
+
   methods: {
     onChangeBuy(event) {
       if (event.target.value !== "") {
@@ -154,19 +161,25 @@ export default {
     },
 
     newSell(){
-      this.sell.user_id = this.$store.state.username;
-      this.sell.crypto_code = this.coinSelectedToSell;
-      this.sell.crypto_amount = this.amountToSell.toFixed(2)
-      this.sell.money = (this.salePrice * this.amountToSell).toFixed(2).toString()
-      this.sell.action = "sale";
-      this.sell.datetime =  Date.now();
-   
-      UserService.newTrade(this.sell)
-     
-      this.$store.commit("newSale", this.sell)
-      this.$router.push("/Current-status")
+      debugger; 
+      let validationAmountCrypto = UserService.cryptos.find(x=> x.symbol === this.coinSelectedToSell)
 
-      alert("Success")
+      if (this.amountToSell > validationAmountCrypto.amount){
+        alert("You don't have that amount of "+this.sell.crypto_code+" to sell")
+        this.$router.push("/trade")
+      }
+      else {
+        this.sell.user_id = this.$store.state.username;
+        this.sell.crypto_code = this.coinSelectedToSell;
+        this.sell.crypto_amount = this.amountToSell.toFixed(2)
+        this.sell.money = (this.salePrice * this.amountToSell).toFixed(2).toString()
+        this.sell.action = "sale";
+        this.sell.datetime =  Date.now();
+        UserService.newTrade(this.sell)
+        alert("Success")
+        this.$store.commit("newSale", this.sell)
+        this.$router.push("/Current-status")
+      }
     },
 
    
@@ -179,5 +192,10 @@ export default {
   display: flex;
   justify-content: space-evenly;
   margin: 10% 0 5% 0;
+}
+.title{
+  margin: 5% 0 0 0;
+  display: flex;
+  justify-content: center;
 }
 </style>

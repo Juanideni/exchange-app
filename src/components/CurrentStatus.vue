@@ -1,5 +1,5 @@
 <template>
-    <h1>Your crypto amounts</h1>
+    <h1 class="title">Your crypto amounts</h1>
      <div class="tableAmounts">
             <table class="table table-striped">
                 <thead>
@@ -33,7 +33,10 @@ export default {
         }
     }, 
     mounted(){
-        console.log(this.cryptoList)
+        if (this.$store.state.username === ''){
+                alert("user not found");
+                this.$router.push("/")
+            }
         this.cryptoList.forEach(element => {
             console.log(element)
             UserService.getCryptoData(element.symbol).then((res)=>{
@@ -52,6 +55,12 @@ export default {
    width: 80%;
    margin-left: auto;
    margin-right: auto;
+   margin: 2% auto 0 auto;
 
+}
+.title{
+    margin: 5% 0 0 0;
+    display: flex;
+    justify-content: center;
 }
 </style>

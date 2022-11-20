@@ -12,8 +12,8 @@
     <tr>
   
       <td>{{exchangeBtc.exchangeBtc.charAt(0).toUpperCase() + exchangeBtc.exchangeBtc.slice(1)}}</td>
-      <td>AR$ {{exchangeBtc.ask}}</td>
-      <td>AR$ {{exchangeBtc.bid}}</td>
+      <td>AR$ {{Number(exchangeBtc.ask).toLocaleString()}}</td>
+      <td>AR$ {{Number(exchangeBtc.bid).toLocaleString()}}</td>
     </tr>
   </tbody>
 </table>
@@ -29,8 +29,8 @@
     <tr>
   
       <td>{{exchangeEth.exchangeEth.charAt(0).toUpperCase() + exchangeEth.exchangeEth.slice(1)}}</td>
-      <td>AR$ {{exchangeEth.ask}}</td>
-      <td>AR$ {{exchangeEth.bid}}</td>
+      <td>AR$ {{Number(exchangeEth.ask).toLocaleString()}}</td>
+      <td>AR$ {{Number(exchangeEth.bid).toLocaleString()}}</td>
     </tr>
   </tbody>
 </table>
@@ -48,8 +48,8 @@
     <tr>
   
       <td>{{exchangeDai.exchangeDai.charAt(0).toUpperCase() + exchangeDai.exchangeDai.slice(1)}}</td>
-      <td>AR$ {{exchangeDai.ask}}</td>
-      <td>AR$ {{exchangeDai.bid}}</td>
+      <td>AR$ {{Number(exchangeDai.ask).toLocaleString()}}</td>
+      <td>AR$ {{Number(exchangeDai.bid).toLocaleString()}}</td>
     </tr>
   </tbody>
 </table>
@@ -65,8 +65,8 @@
     <tr>
   
       <td>{{exchangeUsdt.exchangeUsdt.charAt(0).toUpperCase() + exchangeUsdt.exchangeUsdt.slice(1)}}</td>
-      <td>AR$ {{exchangeUsdt.ask}}</td>
-      <td>AR$ {{exchangeUsdt.bid}}</td>
+      <td>AR$ {{Number(exchangeUsdt.ask).toLocaleString()}}</td>
+      <td>AR$ {{Number(exchangeUsdt.bid).toLocaleString()}}</td>
     </tr>
   </tbody>
 </table>
@@ -164,6 +164,7 @@ export default {
 .tables {
   display: flex;
   justify-content: space-evenly;
+  margin: 2% 0 0 0;
 }
 .table{
   max-width: 600px;

@@ -1,11 +1,9 @@
 <template>
   <div class="home">
-
     <Navbar />
     <Coins/>
-    <h1 class="title">Exchange´s prices</h1>
+    <h1 class="title">Exchange's prices</h1>
       <ExchangesTables />
-    <Foot />
   </div>
 </template>
 
@@ -14,7 +12,6 @@
 
 import Navbar from "@/components/Navbar.vue";
 import ExchangesTables from "@/components/ExchangesTables.vue";
-import Foot from "@/components/Foot.vue";
 import Coins from "@/components/Coins.vue";
 
 export default {
@@ -22,11 +19,12 @@ export default {
   components: {
     Navbar,
     ExchangesTables,
-    Foot,
     Coins
 },
 };
 </script>
 <style scoped>
-
+.title{
+  margin: 2% 0 2% 0;
+}
 </style>

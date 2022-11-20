@@ -1,8 +1,6 @@
 <template>
 
-<h1>Trending Coins</h1>
-
-
+<h1 class="title">Trending Coins</h1>
 
 <div class="slider">
   <div class="coins row row-cols-sm-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-6">
@@ -30,7 +28,8 @@ export default {
   name:"CoinsDataService",
   data(){
       return{
-          trendCoins: null
+          trendCoins: null,
+          lala: null
       }
   },
     mounted() {
@@ -40,9 +39,9 @@ export default {
       };
       
       axios.request(coins).then(response => {
-          this.trendCoins = response.data
-      
-        console.log(this.trendCoins)
+          this.lala = response.data
+        this.trendCoins = this.lala.filter(x => x.id === "bitcoin" || x.id === "ethereum" || x.id === "usd-coin" || x.id === "tether" || x.id === "dai")
+        console.log(this.lala)
       }).catch(function (error) {
         console.error(error);
       });
@@ -54,10 +53,13 @@ export default {
 
 .coins{
     display: flex;
-    
+    justify-content: space-evenly;
 }
 .inside-card{
     display:flex;
     justify-content: space-around;
+}
+.title{
+  margin: 2% 0 2% 0;
 }
 </style>
